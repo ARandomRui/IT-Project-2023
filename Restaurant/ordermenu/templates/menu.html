@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    {% for food in menulists.items %}
+    {% if loop.index % 3 == 0 %}
+    </div>
+    <div class="row">
+    {% endif %}
+        <article class="media content-section col-sm">
+          <img class="article-img" src="{{ url_for('static', filename='food_pics/' + food.image_file) }}">
+          <div class="media-body">
+            <h2><a class="article-title" href="{{ url_for('fooddetail', food_id=food.id) }}">{{ food.name }}</a></h2>
+            <p class="article-content">{{ food.description }}</p>
+          </div>
+        </article>
+    {% endfor %}
+</div>
+    {% for page_num in menulists.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if menulists.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('menu', page=menulists_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('menu', page=menulists_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}
